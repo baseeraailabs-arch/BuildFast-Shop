@@ -9,12 +9,33 @@ const CartPage = lazy(() => import('@pages/CartPage'))
 const CheckoutPage = lazy(() => import('@pages/CheckoutPage'))
 const AccountPage = lazy(() => import('@pages/AccountPage'))
 const OrderHistoryPage = lazy(() => import('@pages/OrderHistoryPage'))
+const SignupPage = lazy(() => import('@pages/SignupPage'))
+const LoginPage = lazy(() => import('@pages/LoginPage'))
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage'))
 
 /**
  * Application routes configuration
  *
- * Routes marked with protected: true require authentication
+ * HOW TO PROTECT A ROUTE:
+ * To make a page require login, wrap its element with <ProtectedRoute>:
+ *
+ * Example:
+ * {
+ *   path: '/checkout',
+ *   element: (
+ *     <ProtectedRoute>
+ *       <CheckoutPage />
+ *     </ProtectedRoute>
+ *   ),
+ *   protected: true,
+ * }
+ *
+ * What happens:
+ * - If user is NOT logged in: They'll be redirected to /login with a message "Please log in to continue"
+ * - After login: They'll be automatically redirected back to the page they were trying to visit
+ * - If user IS logged in: The page loads normally
+ *
+ * Currently, NO pages are protected. Add protection as needed.
  */
 export const routes = [
   {
@@ -39,30 +60,28 @@ export const routes = [
   },
   {
     path: '/checkout',
-    element: (
-      <ProtectedRoute>
-        <CheckoutPage />
-      </ProtectedRoute>
-    ),
-    protected: true,
+    element: <CheckoutPage />,
+    protected: false,
   },
   {
     path: '/account',
-    element: (
-      <ProtectedRoute>
-        <AccountPage />
-      </ProtectedRoute>
-    ),
-    protected: true,
+    element: <AccountPage />,
+    protected: false,
   },
   {
     path: '/orders',
-    element: (
-      <ProtectedRoute>
-        <OrderHistoryPage />
-      </ProtectedRoute>
-    ),
-    protected: true,
+    element: <OrderHistoryPage />,
+    protected: false,
+  },
+  {
+    path: '/signup',
+    element: <SignupPage />,
+    protected: false,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+    protected: false,
   },
   {
     path: '*',
